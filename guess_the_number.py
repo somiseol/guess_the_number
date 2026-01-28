@@ -15,12 +15,16 @@ def generate_secret(low, high):
     return random.randint(low, high)
 
 
-def get_guess():
+def get_guess(low, high):
     """ get user's guess, as an integer number """
     while True:
-        user_input = input('Guess the number: ')
+        user_input = input(f'Guess the number ({low}-{high}): ')
         try:
-            return int(user_input)
+            guess = int(user_input)
+            if low <= guess <= high:
+                return guess
+            else:
+                print(f'Please enter a number between {low}-{high}')
         except ValueError:
             print('Please enter a valid whole number!')
 
@@ -41,7 +45,7 @@ def main():
     secret = generate_secret(low, high)
 
     while True:
-        guess = get_guess()
+        guess = get_guess(low, high)
         result = check_guess(guess, secret)
         print(result)
 
